@@ -17,9 +17,6 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.0.0
-          
-      - name: Change Directory 
-        run: cd dev/local
 
       - name: Terraform Init
         run: terraform init
@@ -28,8 +25,8 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: cd dev/local && terraform plan 
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve
